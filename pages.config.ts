@@ -33,9 +33,15 @@ export default defineUniPages({
         text: '首页',
       },
       {
+        iconPath: 'static/tabbar/cg.png',
+        selectedIconPath: 'static/tabbar/cgHL.png',
+        pagePath: 'pages/category/index',
+        text: '分类',
+      },
+      {
         iconPath: 'static/tabbar/example.png',
         selectedIconPath: 'static/tabbar/exampleHL.png',
-        pagePath: 'pages/about/about',
+        pagePath: 'pages/about/index',
         text: '关于',
       },
     ],

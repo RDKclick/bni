@@ -1,56 +1,201 @@
-<!-- 使用 type="home" 属性设置首页，其他页面不需要设置，默认为page；推荐使用json5，更强大，且允许注释 -->
-<route lang="json5" type="home">
+<route lang="json5" type="page">
 {
+  layout: 'default',
   style: {
-    navigationStyle: 'custom',
-    navigationBarTitleText: '首页',
+    navigationBarTitleText: '',
+    navigationStyle:'custom'
   },
 }
 </route>
-<template>
-  <view
-    class="bg-white overflow-hidden pt-2 px-4"
-    :style="{ marginTop: safeAreaInsets?.top + 'px' }"
-  >
-    <view class="mt-12">
-      <image src="/static/logo.svg" alt="" class="w-28 h-28 block mx-auto" />
-    </view>
-    <view class="text-center text-4xl main-title-color mt-4">unibest</view>
-    <view class="text-center text-2xl mt-2 mb-8">最好用的 uniapp 开发模板</view>
 
-    <view class="text-justify max-w-100 m-auto text-4 indent mb-2">{{ description }}</view>
-    <view class="text-center mt-8">
-      当前平台是：
-      <text class="text-green-500">{{ PLATFORM.platform }}</text>
-    </view>
-    <view class="text-center mt-4">
-      模板分支是：
-      <text class="text-green-500">base</text>
-    </view>
-  </view>
+<template>
+  <div>
+    <scroll-view :refresher-enabled="true" :refresher-triggered="refresherTriggered"
+      @refresherpulling="handleQueryProduct">
+      <SearchBar />
+      <div style="margin: 55px;" v-show="false">
+        <h3 style="margin-bottom: 12px;text-align: center;">测试</h3>
+        <div style="display: flex;justify-content: space-between;">
+          <wd-button @click="handleViewDetail">详情页</wd-button>
+          <wd-button @click="handleQuery">关于</wd-button>
+        </div>
+      </div>
+      <div class="body-container">
+        <!-- 卡片列 -->
+        <div class="card-column-container">
+          <div class="row">
+            <wd-icon name="star-filled" size="15px" style="margin-right: 8px;"></wd-icon>
+            <span class="title">{{ lang("browseByCategory") }}</span>
+          </div>
+          <div class="card-column-row">
+            <div class="card-column" v-for="(product, index) in productList.slice(0, 3)" :key="index"
+              @click="handleViewDetail(product.company.id)">
+              <div class="bg-box">
+                <wd-img width="100%" mode="aspectFit" height="160px" :src="product.product[0].images" />
+                <div class="av">
+                  <wd-img :width="54" :height="54" :src="product.whatsapp.avatar" />
+                </div>
+              </div>
+              <div class="name">
+                {{ product.whatsapp.name }}
+              </div>
+              <div class="factory-images">
+                <div class="images" v-for="(factory, index) in product.album" :key="index">
+                  <!-- imageUrl="http://en.bni1688.co/storage/upload/images/company/5386/other/2024/01/06/1704533245825414.jpg" -->
+                  <!-- <AutoImg :imageUrl="factory.images" /> -->
+                  <wd-img width="100%" mode="widthFix" :src="factory.images" :enable-preview="true">
+                    <template #error>
+                      <!-- <wd-loading /> -->
+                      <!-- <view class="error-wrap">404</view> -->
+                    </template>
+                  </wd-img>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="user-card-container">
+          <div class="row">
+            <wd-icon name="star-filled" size="15px" style="margin-right: 8px;"></wd-icon>
+            <span class="title">SourceHanSansSC-medium</span>
+          </div>
+          <div class="user-card-list">
+            <UserCard v-for="(product, index) in productList" :key="index" :product="product" />
+          </div>
+        </div>
+      </div>
+    </scroll-view>
+
+  </div>
 </template>
 
 <script lang="ts" setup>
-import PLATFORM from '@/utils/platform'
+import SearchBar from '@/components/searchBar/index.vue'
+import UserCard from "@/components/userCard/index.vue";
+import { CompanyProfile, getProductAPI } from '@/service/index/product'
 
-defineOptions({
-  name: 'Home',
-})
+// hooks
+import { useLangDict } from '@/hooks/useLang'
 
-// 获取屏幕边界到安全区域距离
-const { safeAreaInsets } = uni.getSystemInfoSync()
-const author = ref('菲鸽')
-const description = ref(
-  'unibest 是一个集成了多种工具和技术的 uniapp 开发模板，由 uniapp + Vue3 + Ts + Vite4 + UnoCss + UniUI + VSCode 构建，模板具有代码提示、自动格式化、统一配置、代码片段等功能，并内置了许多常用的基本组件和基本功能，让你编写 uniapp 拥有 best 体验。',
-)
-// 测试 uni API 自动引入
-onLoad(() => {
-  console.log(author)
-})
+const { lang } = useLangDict()
+
+const handleViewDetail = (companyId: number) => {
+  uni.navigateTo({
+    url: '/pages/detail/index?companyId=' + companyId,
+  })
+}
+
+const handleQuery = () => {
+  uni.switchTab({
+    url: '/pages/about/index'
+  })
+}
+
+const refresherTriggered = ref(false)
+
+const productList = ref<CompanyProfile[]>([])
+
+const handleQueryProduct = () => {
+  refresherTriggered.value = true
+  getProductAPI().then(res => {
+    console.log("数据", res.data.list);
+
+    const { list } = res.data
+    productList.value = list
+
+  }).finally(() => {
+    refresherTriggered.value = false
+  })
+}
+
+handleQueryProduct()
+
 </script>
 
-<style>
-.main-title-color {
-  color: #d14328;
+<style lang="scss" scoped>
+.body-container {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 46px 17px 0;
+  margin-top: -29px;
+  overflow: auto;
+  background: white;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.card-column-container {
+  width: 100%;
+  margin-bottom: 44px;
+
+
+  .card-column-row {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+
+    .card-column {
+      flex: 1;
+      width: 33%;
+      overflow: hidden;
+
+      .bg-box {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #F8F8F8;
+        border: 1px solid #ECECEC;
+
+        .av {
+          position: absolute;
+          bottom: -25px;
+          left: 50%;
+          // background-color: #F8F8F8;
+          // border: 1px solid #ECECEC;
+          // border-radius: 50%;
+          transform: translateX(-50%);
+        }
+      }
+
+      .name {
+        margin-top: 25px;
+        margin-bottom: 11px;
+        font-family: SourceHanSansSC-bold;
+        font-size: 13px;
+        color: rgba(16, 16, 16, 1);
+        text-align: center;
+      }
+
+      .factory-images {
+        display: flex;
+        gap: 9px;
+        height: 47px;
+
+        .images {
+          box-sizing: border-box;
+          display: flex;
+          flex: 1;
+          align-items: center;
+          justify-content: center;
+          width: 50%;
+          overflow: hide;
+          background-color: #F8F8F8;
+          border: 1px solid #d3cbcb;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+}
+
+.user-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px
 }
 </style>

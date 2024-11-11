@@ -76,6 +76,8 @@ declare global {
   const useAttrs: typeof import('vue')['useAttrs']
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVars: typeof import('vue')['useCssVars']
+  const useLang: typeof import('../hooks/useLang')['useLang']
+  const useLangDict: typeof import('../hooks/useLang')['useLangDict']
   const useNavbarWeixin: (typeof import('../hooks/useNavbarWeixin'))['default']
   const useRequest: typeof import('../hooks/useRequest')['default']
   const useSlots: typeof import('vue')['useSlots']
@@ -168,6 +170,8 @@ declare module 'vue' {
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
+    readonly useLang: UnwrapRef<typeof import('../hooks/useLang')['useLang']>
+    readonly useLangDict: UnwrapRef<typeof import('../hooks/useLang')['useLangDict']>
     readonly useRequest: UnwrapRef<typeof import('../hooks/useRequest')['default']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useUpload: UnwrapRef<typeof import('../hooks/useUpload')['default']>
@@ -251,6 +255,8 @@ declare module '@vue/runtime-core' {
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
+    readonly useLang: UnwrapRef<typeof import('../hooks/useLang')['useLang']>
+    readonly useLangDict: UnwrapRef<typeof import('../hooks/useLang')['useLangDict']>
     readonly useRequest: UnwrapRef<typeof import('../hooks/useRequest')['default']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useUpload: UnwrapRef<typeof import('../hooks/useUpload')['default']>

@@ -30,9 +30,15 @@
         "text": "首页"
       },
       {
+        "iconPath": "static/tabbar/cg.png",
+        "selectedIconPath": "static/tabbar/cgHL.png",
+        "pagePath": "pages/category/index",
+        "text": "分类"
+      },
+      {
         "iconPath": "static/tabbar/example.png",
         "selectedIconPath": "static/tabbar/exampleHL.png",
-        "pagePath": "pages/about/about",
+        "pagePath": "pages/about/index",
         "text": "关于"
       }
     ]
@@ -41,16 +47,62 @@
     {
       "path": "pages/index/index",
       "type": "home",
+      "layout": "default",
       "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "首页"
+        "navigationBarTitleText": "",
+        "navigationStyle": "custom"
       }
     },
     {
-      "path": "pages/about/about",
+      "path": "pages/about/index",
       "type": "page",
+      "layout": "default",
       "style": {
-        "navigationBarTitleText": "关于"
+        "navigationBarTitleText": "关于我们",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/category/index",
+      "type": "page",
+      "layout": "demo",
+      "style": {
+        "navigationBarTitleText": "分类",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/categoryGroup/index",
+      "type": "page",
+      "layout": "default",
+      "style": {
+        "navigationBarTitleText": "Bni1688",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/detail/index",
+      "type": "page",
+      "layout": "demo",
+      "style": {
+        "navigationBarTitleText": "详情",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/search/index",
+      "type": "page",
+      "layout": "demo",
+      "style": {
+        "navigationBarTitleText": "搜索"
+      }
+    },
+    {
+      "path": "pages/test/index",
+      "type": "page",
+      "layout": "default",
+      "style": {
+        "navigationBarTitleText": ""
       }
     }
   ],

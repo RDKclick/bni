@@ -1,8 +1,18 @@
 import { CustomRequestOptions } from '@/interceptors/request'
+import { useLang } from '@/hooks/useLang'
 
 export const http = <T>(options: CustomRequestOptions) => {
   // 1. 返回 Promise 对象
   return new Promise<IResData<T>>((resolve, reject) => {
+    const { getActiveLangCode } = useLang()
+
+    // 自动添加当前站点
+    const lang = getActiveLangCode()
+    options.query = {
+      ...options.query,
+      lang: lang,
+    }
+
     uni.request({
       ...options,
       dataType: 'json',
