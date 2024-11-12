@@ -16,3 +16,20 @@ page {
   // 修改按钮背景色
   // --wot-button-primary-bg-color: green;
 }
+
+/* 字体 */
+@font-face {
+  font-family: 'SourceHanSansSC-bold';
+  /* 字体粗细 */
+  font-style: normal;
+  font-weight: normal;
+  src: url('./static/font/SourceHanSansSC-Bold.woff') format('woff');
+  /* 字体风格 */
+}
+
+@font-face {
+  font-family: 'SourceHanSansSC-Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./static/font/SourceHanSansSC-Regular.woff') format('woff');
+}

@@ -7,6 +7,7 @@ export interface LangOption {
   domain: string
   image: string
   description: string
+  language: string
   language_code: string
 }
 

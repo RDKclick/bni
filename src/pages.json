@@ -47,7 +47,7 @@
     {
       "path": "pages/index/index",
       "type": "home",
-      "layout": "default",
+      "layout": "demo",
       "style": {
         "navigationBarTitleText": "",
         "navigationStyle": "custom"
@@ -100,7 +100,7 @@
     {
       "path": "pages/test/index",
       "type": "page",
-      "layout": "default",
+      "layout": "demo",
       "style": {
         "navigationBarTitleText": ""
       }

@@ -1,17 +1,9 @@
 <template>
   <div class="user-card" @click="handleViewDetail(product.company.id)">
     <div class="user-card-body">
-      <div class="left" @click.stop>
-        <wd-img width="100%" mode="widthFix" :src="product.product[0].images"
-          v-if="product.product && product.product[0] && product.product[0].images" :enable-preview="true">
-          <template #error>
-            <wd-img width="100%" mode="widthFix" src="	http://test.buyerb2b.com/static/images/fantasy_indexhead.png"
-              :enable-preview="true"></wd-img>
-          </template>
-        </wd-img>
-        <wd-img width="100%" mode="widthFix" v-else src="	http://test.buyerb2b.com/static/images/fantasy_indexhead.png"
-          :enable-preview="true"></wd-img>
-      </div>
+      <view class="left" style="width: 100%;aspect-ratio: 132/181;">
+        <AutoImg :src="product.product[0].images" />
+      </view>
       <div class="right">
         <div class="name-text">
           {{ product.company.name }}
@@ -23,13 +15,13 @@
           <span style="margin-left: 8px;">Manufacturer</span>
         </div>
         <div class="product-list">
-          <!-- <div v-for="p in product.product">{{ p.title }}</div> -->
           <div v-for="p in mainProduct">{{ p }}</div>
         </div>
 
         <div class="factory-images-list">
-          <div class="images" v-for="item in product.album" @click.stop>
-            <wd-img width="100%" mode="widthFix" :src="item.images" :enable-preview="true"></wd-img>
+          <div class="images" v-for="(item, index) in product.album" @click.stop>
+            <AutoImg :src="item.images" :preview-current="index"
+              :preview-urls="product.album.map(item => item.images)" />
           </div>
         </div>
       </div>
@@ -37,7 +29,10 @@
     <div class="user-card-footer">
       <div class="left">
         <div class="avatar-warp">
-          <img :src="product.whatsapp.avatar" width="100%" class="avatar" />
+          <!-- <img :src="product.whatsapp.avatar" width="100%" class="avatar" /> -->
+          <view class="avatar">
+            <AutoImg :src="product.whatsapp.avatar" />
+          </view>
         </div>
         <div>
           <div class="people-title">
@@ -60,6 +55,8 @@
 
 <script lang="ts" setup>
 import { CompanyProfile } from '@/service/index/product'
+import AutoImg from "@/components/autoImg/index.vue";
+
 interface Props {
   product: CompanyProfile
 }
@@ -137,6 +134,9 @@ const handleViewDetail = (companyId: number) => {
 
       .images {
         flex: 1;
+        aspect-ratio: 1;
+        overflow: hidden;
+        border-radius: 5px;
       }
     }
   }
@@ -181,6 +181,7 @@ const handleViewDetail = (companyId: number) => {
 .avatar {
   width: 38px;
   height: 38px;
+  overflow: hidden;
   border: 1px solid rgba(220, 220, 220, 1);
   border-radius: 52px;
 }

@@ -57,7 +57,7 @@ export interface CompanyProfile {
   product: ProductItem[];
 }
 
-export const getProductAPI = (data: any) => {
+export const getProductAPI = (data?: any) => {
   return http.get<{
     list: CompanyProfile[]
     total: number

@@ -1,6 +1,6 @@
 <route lang="json5" type="page">
 {
-  layout: 'default',
+  layout: 'demo',
   style: {
     navigationBarTitleText: '',
     navigationStyle:'custom'
@@ -9,67 +9,57 @@
 </route>
 
 <template>
-  <div>
-    <scroll-view :refresher-enabled="true" :refresher-triggered="refresherTriggered"
-      @refresherpulling="handleQueryProduct">
-      <SearchBar />
-      <div style="margin: 55px;" v-show="false">
-        <h3 style="margin-bottom: 12px;text-align: center;">测试</h3>
-        <div style="display: flex;justify-content: space-between;">
-          <wd-button @click="handleViewDetail">详情页</wd-button>
-          <wd-button @click="handleQuery">关于</wd-button>
+  <z-paging ref="pagingRef" v-model="productList" @query="queryList">
+    <template #top>
+      <TopHead />
+    </template>
+    <SearchBar />
+    <div class="body-container">
+      <!-- 卡片列 -->
+      <div class="card-column-container">
+        <div class="row">
+          <wd-icon name="star-filled" size="15px" style="margin-right: 8px;"></wd-icon>
+          <span class="title">{{ lang("browseByCategory") }}</span>
         </div>
-      </div>
-      <div class="body-container">
-        <!-- 卡片列 -->
-        <div class="card-column-container">
-          <div class="row">
-            <wd-icon name="star-filled" size="15px" style="margin-right: 8px;"></wd-icon>
-            <span class="title">{{ lang("browseByCategory") }}</span>
-          </div>
-          <div class="card-column-row">
-            <div class="card-column" v-for="(product, index) in productList.slice(0, 3)" :key="index"
-              @click="handleViewDetail(product.company.id)">
-              <div class="bg-box">
-                <wd-img width="100%" mode="aspectFit" height="160px" :src="product.product[0].images" />
-                <div class="av">
-                  <wd-img :width="54" :height="54" :src="product.whatsapp.avatar" />
+        <div class="card-column-row">
+          <div class="card-column" v-for="(product, index) in productList.slice(0, 3)" :key="index"
+            @click="handleViewDetail(product.company.id)">
+            <div class="bg-box">
+              <AutoImg :src="product.product[0].images" />
+              <div class="av">
+                <AutoImg :src="product.whatsapp.avatar" />
+              </div>
+            </div>
+            <div class="name">
+              {{ product.whatsapp.name || '-' }}
+            </div>
+            <div class="factory-images">
+              <template v-for="(factory, index) in product.album" :key="index">
+                <div class="images" v-if="index <= 1">
+                  <AutoImg :src="factory.images" />
                 </div>
-              </div>
-              <div class="name">
-                {{ product.whatsapp.name }}
-              </div>
-              <div class="factory-images">
-                <div class="images" v-for="(factory, index) in product.album" :key="index">
-                  <!-- imageUrl="http://en.bni1688.co/storage/upload/images/company/5386/other/2024/01/06/1704533245825414.jpg" -->
-                  <!-- <AutoImg :imageUrl="factory.images" /> -->
-                  <wd-img width="100%" mode="widthFix" :src="factory.images" :enable-preview="true">
-                    <template #error>
-                      <!-- <wd-loading /> -->
-                      <!-- <view class="error-wrap">404</view> -->
-                    </template>
-                  </wd-img>
-                </div>
-              </div>
+              </template>
             </div>
           </div>
         </div>
-        <div class="user-card-container">
-          <div class="row">
-            <wd-icon name="star-filled" size="15px" style="margin-right: 8px;"></wd-icon>
-            <span class="title">SourceHanSansSC-medium</span>
-          </div>
-          <div class="user-card-list">
-            <UserCard v-for="(product, index) in productList" :key="index" :product="product" />
-          </div>
+      </div>
+      <div class="user-card-container">
+        <div class="row">
+          <wd-icon name="star-filled" size="15px" style="margin-right: 8px;"></wd-icon>
+          <span class="title">SourceHanSansSC-medium</span>
+        </div>
+        <div class="user-card-list">
+          <UserCard v-for="(product, index) in productList" :key="index" :product="product" />
         </div>
       </div>
-    </scroll-view>
+    </div>
+  </z-paging>
 
-  </div>
 </template>
 
 <script lang="ts" setup>
+import TopHead from "@/components/topHead/index.vue";
+import AutoImg from "@/components/autoImg/index.vue";
 import SearchBar from '@/components/searchBar/index.vue'
 import UserCard from "@/components/userCard/index.vue";
 import { CompanyProfile, getProductAPI } from '@/service/index/product'
@@ -95,6 +85,21 @@ const refresherTriggered = ref(false)
 
 const productList = ref<CompanyProfile[]>([])
 
+const pagingRef = ref()
+
+const queryList = (pageNo, pageSize) => {
+  // 此处请求仅为演示，请替换为自己项目中的请求
+  getProductAPI({ pageNo, pageSize }).then(res => {
+    // 将请求结果通过complete传给z-paging处理，同时也代表请求结束，这一行必须调用
+    pagingRef.value.complete(res.data.list);
+  }).catch(res => {
+    // 如果请求失败写paging.value.complete(false);
+    // 注意，每次都需要在catch中写这句话很麻烦，z-paging提供了方案可以全局统一处理
+    // 在底层的网络请求抛出异常时，写uni.$emit('z-paging-error-emit');即可
+    pagingRef.value.complete(false);
+  })
+}
+
 const handleQueryProduct = () => {
   refresherTriggered.value = true
   getProductAPI().then(res => {
@@ -108,8 +113,6 @@ const handleQueryProduct = () => {
   })
 }
 
-handleQueryProduct()
-
 </script>
 
 <style lang="scss" scoped>
@@ -118,7 +121,7 @@ handleQueryProduct()
   width: 100%;
   padding: 46px 17px 0;
   margin-top: -29px;
-  overflow: auto;
+  // overflow: auto;
   background: white;
 }
 
@@ -126,6 +129,10 @@ handleQueryProduct()
   display: flex;
   align-items: center;
   margin-bottom: 15px;
+
+  .title {
+    font-family: SourceHanSansSC-Bold;
+  }
 }
 
 .card-column-container {
@@ -141,13 +148,14 @@ handleQueryProduct()
     .card-column {
       flex: 1;
       width: 33%;
-      overflow: hidden;
 
       .bg-box {
         position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
+        width: 100%;
+        aspect-ratio: 118/160;
         background-color: #F8F8F8;
         border: 1px solid #ECECEC;
 
@@ -155,6 +163,10 @@ handleQueryProduct()
           position: absolute;
           bottom: -25px;
           left: 50%;
+          width: 54px;
+          height: 54px;
+          overflow: hidden;
+          border-radius: 50%;
           // background-color: #F8F8F8;
           // border: 1px solid #ECECEC;
           // border-radius: 50%;
@@ -173,7 +185,8 @@ handleQueryProduct()
 
       .factory-images {
         display: flex;
-        gap: 9px;
+        gap: 5px;
+        justify-content: space-between;
         height: 47px;
 
         .images {
@@ -182,8 +195,9 @@ handleQueryProduct()
           flex: 1;
           align-items: center;
           justify-content: center;
-          width: 50%;
-          overflow: hide;
+          aspect-ratio: 1;
+          // width: 50%;
+          // overflow: hide;
           background-color: #F8F8F8;
           border: 1px solid #d3cbcb;
           border-radius: 5px;
