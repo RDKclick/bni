@@ -13,7 +13,7 @@
     <div class="ab-item-list">
       <div class="ab-item" v-if="infos.aboutUs">
         <div class="title">
-          About Us
+          {{ lang("aboutUs") }}
         </div>
         <div class="hr"></div>
         <div class="content" v-html="infos.aboutUs">
@@ -24,7 +24,7 @@
       </div> -->
       <div class="ab-item" v-if="infos.contactUs">
         <div class="title">
-          Contact us
+          {{ lang("contactUs") }}
         </div>
         <div class="hr"></div>
         <div class="content" v-html="infos.contactUs">
@@ -32,7 +32,7 @@
       </div>
       <div class="ab-item" v-if=infos.privacyPolicy>
         <div class="title">
-          Privacy Policy
+          {{ lang("privacyPolicy") }}
         </div>
         <div class="hr"></div>
         <div class="content" v-html="infos.privacyPolicy">
@@ -44,6 +44,9 @@
 
 <script lang="ts" setup>
 import { queryAboutUs } from "@/service/index/detail";
+import { useLangDict } from '@/hooks/useLang'
+
+const { lang } = useLangDict()
 //
 
 const contentList = ref<{ id: number, content: string }[]>([])

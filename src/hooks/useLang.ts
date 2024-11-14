@@ -8,18 +8,27 @@ export const useLang = () => {
   function getActiveLangCode() {
     var domain = window.location.hostname; // 获取完整的域名
     var parts = domain.split('.'); // 以点号分割域名
+
     if (parts.length > 2) {
-      if (typeof Number(parts[0]) === 'number') {
-        return 'en'
-      }
-
-
-      // 如果域名中包含至少两个点，那么返回第二部分作为二级域名
-      return parts[0];
+      let domainIdx = parts.findIndex(item => item === 'bni1688')
+      const code = parts[domainIdx - 1]
+      return code
     } else {
-      // 如果没有二级域名，返回空字符串
-      return 'en';
+      return 'en'
     }
+
+    // if (parts.length > 2) {
+    //   if (typeof Number(parts[0]) === 'number') {
+    //     return 'en'
+    //   }
+
+
+    //   // 如果域名中包含至少两个点，那么返回第二部分作为二级域名
+    //   return parts[0];
+    // } else {
+    //   // 如果没有二级域名，返回空字符串
+    //   return 'en';
+    // }
   }
 
   activeLangCode.value = getActiveLangCode()
@@ -72,7 +81,7 @@ export const useLangDict = () => {
   }
 
   return {
-    lang: (str: string) => langDict.value[str] || '',
+    lang: (str: string) => langDict.value[str] || str,
     modifySecondLevelDomain
   }
 }
