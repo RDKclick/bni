@@ -2,7 +2,7 @@
   {
     layout: 'demo',
     style: {
-      navigationBarTitleText: '分类',
+      navigationBarTitleText: 'Categories',
       navigationStyle:'custom'
     },
   }
@@ -34,6 +34,10 @@
           </div>
         </div>
       </div>
+      <!-- 自定义的没有更多数据view -->
+      <template #loadingMoreNoMore>
+        <view style="padding:15px 0;color:#CCCCCC;text-align: center">No More</view>
+      </template>
     </z-paging>
   </div>
 </template>
@@ -92,7 +96,7 @@ handleQueryData()
 
 <style lang="scss" scoped>
 .category-container {
-  padding: 19px 17px 0;
+  padding: 19px 17px 19px;
 
   .row {
     margin-bottom: 11px;

@@ -2,7 +2,7 @@
 {
   layout: 'demo',
   style: {
-    navigationBarTitleText: '',
+    navigationBarTitleText: 'Home',
     navigationStyle:'custom'
   },
 }
@@ -36,7 +36,8 @@
             <div class="factory-images">
               <template v-for="(factory, index) in product.album" :key="index">
                 <div class="images" v-if="index <= 1">
-                  <AutoImg :src="factory.images" />
+                  <AutoImg :src="factory.images" :preview-current="index"
+                    :preview-urls="product.album.map(item => item.images)" />
                 </div>
               </template>
             </div>
@@ -53,6 +54,10 @@
         </div>
       </div>
     </div>
+    <!-- 自定义的没有更多数据view -->
+    <template #loadingMoreNoMore>
+      <view style="padding:15px 0;color:#CCCCCC;text-align: center">no more...</view>
+    </template>
   </z-paging>
 
 </template>

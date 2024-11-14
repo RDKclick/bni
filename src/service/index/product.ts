@@ -82,6 +82,7 @@ export interface CompanyProfile {
   about_us: AboutUs;
   album: AlbumItem[];
   product: ProductItem[];
+  bni_album?: AlbumItem[];
 }
 
 export const getProductAPI = (data?: any) => {
@@ -89,4 +90,11 @@ export const getProductAPI = (data?: any) => {
     list: CompanyProfile[]
     total: number
   }>('/api/v1/shop/product/list', data)
+}
+
+export const productSearchAPI = (data?: any) => {
+  return http.get<{
+    list: CompanyProfile[]
+    total: number
+  }>('/api/v1/shop/product/search', data)
 }

@@ -27,19 +27,19 @@
         "iconPath": "static/tabbar/home.png",
         "selectedIconPath": "static/tabbar/homeHL.png",
         "pagePath": "pages/index/index",
-        "text": "首页"
+        "text": "Home"
       },
       {
         "iconPath": "static/tabbar/cg.png",
         "selectedIconPath": "static/tabbar/cgHL.png",
         "pagePath": "pages/category/index",
-        "text": "分类"
+        "text": "Categories"
       },
       {
         "iconPath": "static/tabbar/example.png",
         "selectedIconPath": "static/tabbar/exampleHL.png",
         "pagePath": "pages/about/index",
-        "text": "关于"
+        "text": "About"
       }
     ]
   },
@@ -49,7 +49,7 @@
       "type": "home",
       "layout": "demo",
       "style": {
-        "navigationBarTitleText": "",
+        "navigationBarTitleText": "Home",
         "navigationStyle": "custom"
       }
     },
@@ -58,7 +58,7 @@
       "type": "page",
       "layout": "default",
       "style": {
-        "navigationBarTitleText": "关于我们",
+        "navigationBarTitleText": "About",
         "navigationStyle": "custom"
       }
     },
@@ -67,7 +67,7 @@
       "type": "page",
       "layout": "demo",
       "style": {
-        "navigationBarTitleText": "分类",
+        "navigationBarTitleText": "Categories",
         "navigationStyle": "custom"
       }
     },

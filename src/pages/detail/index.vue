@@ -80,18 +80,7 @@
                 custom-next-image-class="custom-image-prev" custom-prev-image-class="custom-image-prev"
                 :list="swiperList" previousMargin="24px" nextMargin="24px"></wd-swiper>
             </div>
-            <div style="margin-top: 27px;">
-              <div class="title-row">
-                <wd-icon name="discount-filled" size="19px" style="margin-right:3px"></wd-icon>
-                <span>Product Introduction</span>
-              </div>
-              <div v-html="aboutCs?.bni_info.brief_introduction?.value">
-              </div>
-              <!-- <CollapseText :text="aboutCs?.bni_info.brief_introduction?.value" /> -->
-              <!-- <wd-collapse>
-                <div v-if="aboutCs" v-html="aboutCs.brief_introduction.value"></div>
-              </wd-collapse> -->
-            </div>
+
           </div>
         </wd-tab>
         <wd-tab title="Factory photos" v-if="factoryList.length">
@@ -105,14 +94,28 @@
           </div>
         </wd-tab>
       </wd-tabs>
-      <div class="block-white" style="margin-top: 16px;" v-if="false">
+      <div style="padding: 0 27px 12px 12px;background:#FFFFFF">
         <div class="title-row">
           <wd-icon name="discount-filled" size="19px" style="margin-right:3px"></wd-icon>
           <span>Product Introduction</span>
         </div>
+        <div v-html="aboutCs?.bni_info.brief_introduction?.value">
+        </div>
+        <!-- <CollapseText :text="aboutCs?.bni_info.brief_introduction?.value" /> -->
+        <!-- <wd-collapse>
+                <div v-if="aboutCs" v-html="aboutCs.brief_introduction.value"></div>
+              </wd-collapse> -->
+      </div>
+      <div class="block-white" style="margin-top: 16px;"
+        v-if="companyInfo?.bni_album && companyInfo?.bni_album.length > 0">
+        <div class="title-row">
+          <wd-icon name="discount-filled" size="19px" style="margin-right:3px"></wd-icon>
+          <span>BNI</span>
+        </div>
         <div class="images-list">
-          <div v-for="item in 8" :key="item" class="item">
-            <wd-img :width="100" :height="100" :src="image" />
+          <div v-for="(item, index) in companyInfo?.bni_album" :key="index" class="item">
+            <AutoImg :src="item.images" :previewUrls="companyInfo.bni_album.map(item => item.images)"
+              :preview-current="index" />
           </div>
         </div>
       </div>
@@ -124,18 +127,13 @@
 </template>
 
 <script lang="ts" setup>
-import { WhatsApp, Company, ProductItem, AboutUs, CompanyProfile } from "@/service/index/product";
+import { Company, ProductItem, AboutUs, CompanyProfile } from "@/service/index/product";
 import { queryCompanyDetail } from '@/service/index/detail'
 import { downloadByFileid } from '@/utils/index'
-import CollapseText from "@/components/collapseText/index.vue";
+import AutoImg from '@/components/autoImg/index.vue'
+// import CollapseText from "@/components/collapseText/index.vue";
 import { useMessage } from 'wot-design-uni'
 const message = useMessage()
-
-const image = `https://p3-passport.byteacctimg.com/img/user-avatar/88bd288485e7e401e21450414b8ec7eb~90x90.awebp`
-
-const productNames = ref([
-  "Shoes", "AD colder fans", "Wooden furniture", "Wooden furniture", "Tinbox", "AD colder fans"
-])
 
 const handleBack = () => {
   uni.navigateBack();
@@ -274,8 +272,6 @@ onLoad((options) => {
 .bni-info {
   display: flex;
   gap: 40px;
-
-  margin-top: 15px;
   text-align: center;
 
   .title {
@@ -326,7 +322,10 @@ onLoad((options) => {
   gap: 10px;
 
   .item {
-    overflow: hidden;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    // overflow: hidden;
   }
 }
 

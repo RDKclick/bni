@@ -19,7 +19,7 @@
         </div>
 
         <div class="factory-images-list">
-          <div class="images" v-for="(item, index) in product.album" @click.stop>
+          <div class="images" v-for="(item, index) in product.album.slice(0, 6)" @click.stop>
             <AutoImg :src="item.images" :preview-current="index"
               :preview-urls="product.album.map(item => item.images)" />
           </div>
@@ -130,8 +130,10 @@ const handleViewDetail = (companyId: number) => {
     }
 
     .factory-images-list {
-      display: flex;
-      flex-wrap: wrap;
+      // display: flex;
+      // flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 8px;
       margin-top: 12px;
 

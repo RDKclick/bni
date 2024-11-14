@@ -36,6 +36,10 @@
         <UserCard :product="item" />
       </view>
     </view>
+    <!-- 自定义的没有更多数据view -->
+    <template #loadingMoreNoMore>
+      <view style="padding:15px 0;color:#CCCCCC;text-align: center">No More</view>
+    </template>
   </z-paging>
 
 </template>

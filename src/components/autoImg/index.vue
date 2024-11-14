@@ -4,8 +4,11 @@
   -->
   <image style="width:100%;height:100%" v-if="loading && !isError" lazy-load :src="loadImage"></image>
   <image style="width:100%;height:100%" v-if="isError" lazy-load :src="errorImage"></image>
+  <image style="width:100%;height:100%" mode="aspectFill" v-else-if="previewUrls.length > 0" :src="src"
+    @load="handleLoad" @error="handleError" @click.stop="handlePreview">
+  </image>
   <image style="width:100%;height:100%" mode="aspectFill" v-else :src="src" @load="handleLoad" @error="handleError"
-    @click.stop="handlePreview">
+    @click="handlePreview">
   </image>
 </template>
 
