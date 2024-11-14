@@ -102,6 +102,7 @@ handleQueryData()
 .card-block-list {
   display: flex;
   flex-direction: column;
+  gap: 15px;
 }
 
 .card-block {

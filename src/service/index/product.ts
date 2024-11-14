@@ -36,6 +36,7 @@ export interface AboutUs {
   brief_introduction?: {
     value: string
   }
+  bni_info?: OptionalBniInfo
 }
 
 interface AlbumItem {
@@ -49,6 +50,32 @@ export interface ProductItem {
   images: string;
 }
 
+export interface BniInfo {
+  avatar: string
+  companyArea: number
+  companyNature: string
+  electronicReport: string
+  email: string
+  employeeCount: number
+  establishmentPeriod: string
+  joinBni: string
+  mainProduct: string
+  medal: string[]
+  name: string
+  phone: string
+  position: string
+  whatsapp: string
+  brief_introduction: {
+    htmlType: 0,
+    layoutType: 0,
+    tabsTitle: "product details",
+    value: "<p></p>",
+  }
+}
+
+export type OptionalBniInfo = {
+  [K in keyof BniInfo]?: BniInfo[K];
+};
 export interface CompanyProfile {
   whatsapp?: WhatsApp;
   company: Company;

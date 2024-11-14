@@ -27,11 +27,11 @@
             <div class="bg-box">
               <AutoImg :src="product.product[0].images" />
               <div class="av">
-                <AutoImg :src="product.whatsapp.avatar" />
+                <AutoImg :src="product?.about_us?.bni_info?.avatar" />
               </div>
             </div>
             <div class="name">
-              {{ product.whatsapp.name || '-' }}
+              {{ product.about_us.bni_info.name || '-' }}
             </div>
             <div class="factory-images">
               <template v-for="(factory, index) in product.album" :key="index">

@@ -116,3 +116,14 @@ export const getNeedLoginPages = (): string[] => getAllPages('needLogin').map((p
  * 只得到 path 数组
  */
 export const needLoginPages: string[] = getAllPages('needLogin').map((page) => page.path)
+
+export const downloadByFileid = (filePath: string, fileName = '画册') => {
+  const tempLink = document.createElement("a");
+  tempLink.style.display = "none";
+  tempLink.href = filePath;
+  tempLink.setAttribute("download", fileName);
+  tempLink.setAttribute("target", "_blank");
+  document.body.appendChild(tempLink);
+  tempLink.click();
+  document.body.removeChild(tempLink);
+};

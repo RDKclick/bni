@@ -15,7 +15,7 @@
           <span style="margin-left: 8px;">Manufacturer</span>
         </div>
         <div class="product-list">
-          <div v-for="p in mainProduct">{{ p }}</div>
+          <div v-for="p in product.about_us.bni_info.mainProduct.split('\n')">{{ p }}</div>
         </div>
 
         <div class="factory-images-list">
@@ -31,15 +31,15 @@
         <div class="avatar-warp">
           <!-- <img :src="product.whatsapp.avatar" width="100%" class="avatar" /> -->
           <view class="avatar">
-            <AutoImg :src="product.whatsapp.avatar" />
+            <AutoImg :src="product?.about_us?.bni_info?.avatar" />
           </view>
         </div>
         <div>
           <div class="people-title">
-            {{ product.whatsapp.name }}
+            {{ product.about_us.bni_info.name }}
           </div>
           <div class="people-position">
-            {{ product.whatsapp.position }}
+            {{ product.about_us.bni_info.position }}
           </div>
         </div>
       </div>
@@ -118,6 +118,9 @@ const handleViewDetail = (companyId: number) => {
     }
 
     .product-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
       margin-top: 12px;
       font-family: SourceHanSansSC-regular;
       font-size: 12px;

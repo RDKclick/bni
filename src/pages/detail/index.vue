@@ -20,15 +20,15 @@
     <div class="content">
       <div class="info-box">
         <div>
-          <wd-img :width="74" :height="74" round :src="profile.avatar" v-if="profile" />
+          <wd-img :width="74" :height="74" round :src="companyInfo.about_us.bni_info.avatar" v-if="companyInfo" />
           <div>
             <div class="syb">BNI1688</div>
           </div>
         </div>
-        <div class="right" v-if="profile">
+        <div class="right" v-if="companyInfo?.about_us?.bni_info?.name">
           <div>
-            <span class="name">{{ profile.name }}</span>
-            <span class="position">{{ profile.position }}</span>
+            <span class="name">{{ companyInfo?.about_us?.bni_info?.name }}</span>
+            <span class="position">{{ companyInfo?.about_us?.bni_info?.position }}</span>
           </div>
           <div>
             {{ company.name }}
@@ -56,11 +56,12 @@
                 Join BNI
               </div>
             </div>
-            <div>
-              <div>
+            <div v-if="companyInfo?.about_us?.bni_info?.electronicReport">
+              <div @click="handleDownloadByFileid">
                 <wd-icon name="download" size="15px"></wd-icon>
                 <span>
-                  26.1M
+                  <!-- 26.1M -->
+                  Download
                 </span>
               </div>
               <div class="title">
@@ -84,7 +85,9 @@
                 <wd-icon name="discount-filled" size="19px" style="margin-right:3px"></wd-icon>
                 <span>Product Introduction</span>
               </div>
-              <CollapseText :text="aboutCs.brief_introduction.value" />
+              <div v-html="aboutCs?.bni_info.brief_introduction?.value">
+              </div>
+              <!-- <CollapseText :text="aboutCs?.bni_info.brief_introduction?.value" /> -->
               <!-- <wd-collapse>
                 <div v-if="aboutCs" v-html="aboutCs.brief_introduction.value"></div>
               </wd-collapse> -->
@@ -121,8 +124,9 @@
 </template>
 
 <script lang="ts" setup>
-import { WhatsApp, Company, ProductItem, AboutUs } from "@/service/index/product";
+import { WhatsApp, Company, ProductItem, AboutUs, CompanyProfile } from "@/service/index/product";
 import { queryCompanyDetail } from '@/service/index/detail'
+import { downloadByFileid } from '@/utils/index'
 import CollapseText from "@/components/collapseText/index.vue";
 
 const image = `https://p3-passport.byteacctimg.com/img/user-avatar/88bd288485e7e401e21450414b8ec7eb~90x90.awebp`
@@ -155,6 +159,10 @@ const swiperList = ref([
 
 const factoryList = ref<string[]>([])
 
+const handleDownloadByFileid = () => {
+  // uni.sho
+}
+
 const isProductMore = ref(true)
 
 const profile = ref<WhatsApp>()
@@ -164,9 +172,13 @@ const aboutCs = ref<AboutUs>()
 
 const mainProduct = ref<string[]>()
 
+const companyInfo = ref<CompanyProfile>()
+
 onLoad((options) => {
   console.log("options", options.companyId);
   queryCompanyDetail(Number(options.companyId)).then(res => {
+    companyInfo.value = res.data.company
+
     console.log("详情", res.data);
     profile.value = res.data.company.whatsapp
     company.value = res.data.company.company
@@ -224,7 +236,19 @@ onLoad((options) => {
   padding-top: 0;
 
   .right {
+    display: flex;
     flex: 1;
+    flex-direction: column;
+    gap: 6px;
+
+    .name {
+      font-weight: 600;
+    }
+
+    .position {
+      color: #595959;
+      color: 12px;
+    }
   }
 }
 
@@ -298,7 +322,7 @@ onLoad((options) => {
   flex-direction: column;
   height: 100vh;
   overflow: auto;
-
+  background-color: #F2F3F7;
 
   .content {
     flex: 1;
