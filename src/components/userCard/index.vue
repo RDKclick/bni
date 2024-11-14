@@ -15,7 +15,7 @@
           <span style="margin-left: 8px;">Manufacturer</span>
         </div>
         <div class="product-list">
-          <div v-for="p in product.about_us.bni_info.mainProduct.split('\n')">{{ p }}</div>
+          <div v-for="p in product.about_us?.bni_info?.mainProduct?.split('\n')">{{ p }}</div>
         </div>
 
         <div class="factory-images-list">
@@ -36,10 +36,10 @@
         </div>
         <div>
           <div class="people-title">
-            {{ product.about_us.bni_info.name }}
+            {{ product?.about_us.bni_info?.name }}
           </div>
           <div class="people-position">
-            {{ product.about_us.bni_info.position }}
+            {{ product?.about_us.bni_info?.position }}
           </div>
         </div>
       </div>

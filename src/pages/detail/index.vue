@@ -31,7 +31,7 @@
             <span class="position">{{ companyInfo?.about_us?.bni_info?.position }}</span>
           </div>
           <div>
-            {{ company.name }}
+            {{ companyInfo.company.name }}
           </div>
           <div>
             <span class="status">
@@ -57,7 +57,7 @@
               </div>
             </div>
             <div v-if="companyInfo?.about_us?.bni_info?.electronicReport">
-              <div @click="handleDownloadByFileid">
+              <div @click="handleDownloadByFileid(companyInfo?.about_us?.bni_info?.electronicReport)">
                 <wd-icon name="download" size="15px"></wd-icon>
                 <span>
                   <!-- 26.1M -->
@@ -128,6 +128,8 @@ import { WhatsApp, Company, ProductItem, AboutUs, CompanyProfile } from "@/servi
 import { queryCompanyDetail } from '@/service/index/detail'
 import { downloadByFileid } from '@/utils/index'
 import CollapseText from "@/components/collapseText/index.vue";
+import { useMessage } from 'wot-design-uni'
+const message = useMessage()
 
 const image = `https://p3-passport.byteacctimg.com/img/user-avatar/88bd288485e7e401e21450414b8ec7eb~90x90.awebp`
 
@@ -159,13 +161,25 @@ const swiperList = ref([
 
 const factoryList = ref<string[]>([])
 
-const handleDownloadByFileid = () => {
-  // uni.sho
+const handleDownloadByFileid = (url: any) => {
+  // console.log("url", );
+
+  message
+    .confirm({
+      title: '确认下载吗?',
+    })
+    .then(() => {
+      // console.log('点击了确定按钮', url[0].response.data.url)
+      downloadByFileid(url[0].response.data.url, '电子画报')
+
+    })
+    .catch(() => {
+      // console.log('点击了取消按钮')
+    })
 }
 
 const isProductMore = ref(true)
 
-const profile = ref<WhatsApp>()
 const company = ref<Company>()
 const productList = ref<ProductItem[]>()
 const aboutCs = ref<AboutUs>()
@@ -180,7 +194,6 @@ onLoad((options) => {
     companyInfo.value = res.data.company
 
     console.log("详情", res.data);
-    profile.value = res.data.company.whatsapp
     company.value = res.data.company.company
     productList.value = res.data.company.product
     aboutCs.value = res.data.company.about_us
