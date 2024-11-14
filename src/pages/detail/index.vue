@@ -42,7 +42,7 @@
             </span>
           </div>
           <div class="tag-box">
-            <div v-for="(tag, index) in mainProduct" :key="index">
+            <div v-for="(tag, index) in companyInfo.about_us.bni_info.mainProduct.split('\n')" :key="index">
               <wd-tag custom-class="space" type="primary">{{ tag }}</wd-tag>
             </div>
           </div>
@@ -121,7 +121,11 @@
       </div>
     </div>
     <div style="padding:15px 39px">
-      <wd-button style="width:100%" size="large">Live Chat</wd-button>
+      <!-- <wd-button style="width:100%" size="large">Live Chat</wd-button> -->
+      <LiveBtn :email="companyInfo.about_us.bni_info.email" :phone="companyInfo.about_us.bni_info.phone"
+        :whatsapp="companyInfo.about_us.bni_info.whatsapp" :btn-style="{
+          width: '100%'
+        }" />
     </div>
   </div>
 </template>
@@ -131,6 +135,7 @@ import { Company, ProductItem, AboutUs, CompanyProfile } from "@/service/index/p
 import { queryCompanyDetail } from '@/service/index/detail'
 import { downloadByFileid } from '@/utils/index'
 import AutoImg from '@/components/autoImg/index.vue'
+import LiveBtn from '@/components/liveBtn/index.vue'
 // import CollapseText from "@/components/collapseText/index.vue";
 import { useMessage } from 'wot-design-uni'
 const message = useMessage()

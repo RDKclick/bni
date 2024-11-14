@@ -20,7 +20,7 @@ interface Props {
   title: string
   options: Options[]
   showCount?: number,
-  value: string | number
+  value: string | number | undefined
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -35,7 +35,7 @@ const countOptions = computed(() => {
   return [
     {
       label: 'all',
-      id: undefined
+      value: undefined
     },
     ...opList
   ]

@@ -53,7 +53,7 @@ queryLangApi().then(res => {
 
   const code = getActiveLangCode()
   const target = langOptions.value.find(item => item.language_code === code)
-  activeLang.value = target.id
+  target && (activeLang.value = target.id)
 
   console.log("语言列表", res.data, langOptions.value);
 })

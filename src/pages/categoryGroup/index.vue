@@ -65,38 +65,38 @@ const searchParams = reactive({
 
 const revenueArr = ref([
   {
-    id: '0-1',
+    value: '0-1',
     label: '< US$1'
   },
   {
-    id: '1-10',
+    value: '1-10',
     label: 'US$1 < or < US$10'
   },
   {
-    id: '10-100',
+    value: '10-100',
     label: 'US$10 < or < US$100'
   },
   {
-    id: '100-1000000',
+    value: '100-1000000',
     label: '> US$100'
   }
 ])
 
 const areaAr = ref([
   {
-    id: '0-100',
+    value: '0-100',
     label: '< 100'
   },
   {
-    id: '100-500',
+    value: '100-500',
     label: '100 < or < 500'
   },
   {
-    id: '500-1000',
+    value: '500-1000',
     label: '500 < or < 1000'
   },
   {
-    id: '1000-1000000000',
+    value: '1000-1000000000',
     label: '> 1000'
   }
 ])
@@ -125,12 +125,12 @@ const handleInit = async () => {
 const pagingRef = ref()
 
 const handleToggleYear = (record: any) => {
-  searchParams.year_revenue = record.id
+  searchParams.year_revenue = record.value
   pagingRef.value.reload()
 }
 
 const handleToggleArea = (record: any) => {
-  searchParams.area = record.id
+  searchParams.area = record.value
   pagingRef.value.reload()
 }
 
