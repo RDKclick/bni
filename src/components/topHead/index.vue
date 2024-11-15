@@ -17,7 +17,8 @@
 
     </div> -->
     <div>
-      <div @click="closeOutside">
+      <!-- @click="closeOutside" -->
+      <div>
         <wd-drop-menu>
           <wd-drop-menu-item v-model="activeLang" :options="langOptions" @change="handleChange" />
         </wd-drop-menu>
@@ -70,6 +71,7 @@ const handleGoCategory = () => {
 
 const { modifySecondLevelDomain } = useLangDict()
 const handleChange = (row: any) => {
+  console.log("选中", row);
   const link = modifySecondLevelDomain(row.selectedItem.language_code)
 
   console.log("修改了", link, modifySecondLevelDomain(row.selectedItem.language_code));

@@ -58,8 +58,9 @@ const countActions = computed(() => {
           cancelButtonText: "CANCEL",
           msg: props.whatsapp
         }).then(res => {
-          const whatsappUrl = "whatsapp://send?phone=" + props.whatsapp;
-          window.open(whatsappUrl)
+          const link = `https://wa.me/${props.whatsapp}`
+          // const whatsappUrl = "whatsapp://send?phone=" + props.whatsapp;
+          window.open(link)
         })
       }
     })

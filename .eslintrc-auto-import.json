@@ -91,6 +91,7 @@
     "watchPostEffect": true,
     "watchSyncEffect": true,
     "useLang": true,
-    "useLangDict": true
+    "useLangDict": true,
+    "useAbout": true
   }
 }

@@ -19,7 +19,7 @@
       <!-- 页面内容 -->
       <div class="category-container">
         <div class="row">
-          Browse by Category
+          {{ lang("browseByCategory") }}
         </div>
         <div class="card-block-list">
           <div class="card-block" v-for="cg in categoryList" :key="cg.id">
@@ -36,7 +36,7 @@
       </div>
       <!-- 自定义的没有更多数据view -->
       <template #loadingMoreNoMore>
-        <view style="padding:15px 0;color:#CCCCCC;text-align: center">No More</view>
+        <view style="padding:15px 0;color:#CCCCCC;text-align: center">{{ lang("noData") }}</view>
       </template>
     </z-paging>
   </div>
@@ -46,6 +46,9 @@
 import { handleQueryCategorys, Category } from "@/service/index/category";
 import SearchBar from "@/components/searchBar/index.vue";
 import TopHead from "@/components/topHead/index.vue";
+import { useLangDict } from "@/hooks/useLang";
+
+const { lang } = useLangDict()
 
 const paging = ref()
 

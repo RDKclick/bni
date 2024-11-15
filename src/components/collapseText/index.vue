@@ -1,7 +1,8 @@
 <template>
   <div class="text-collapse" :class="{ close: isCollapsed }">
-    <div v-if="isCollapsed" v-html="collapsedText"></div>
-    <div v-else v-html="fullText"></div>
+    <!-- <div v-if="isCollapsed" v-html="collapsedText"></div>
+    <div v-else v-html="fullText"></div> -->
+    <slot></slot>
     <!-- <button @click="toggleText">{{ isCollapsed ? '展开' : '收起' }}</button> -->
     <div class="btn-box">
       <wd-icon class="btn" @click="toggleText" v-if="isCollapsed" name="arrow-down" color="#323233"
@@ -16,7 +17,7 @@
 import { ref, computed } from 'vue';
 
 interface TextCollapseProps {
-  text: string;
+  text?: string;
   lines?: number;
 }
 
@@ -49,7 +50,9 @@ const toggleText = () => {
   transition: max-height 0.3s ease;
 
   &.close {
-    max-height: 4.5em;
+    // max-height: auto;
+    max-height: 500px;
+    // max-height: 4.5em;
   }
 }
 

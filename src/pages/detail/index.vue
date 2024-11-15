@@ -99,12 +99,11 @@
           <wd-icon name="discount-filled" size="19px" style="margin-right:3px"></wd-icon>
           <span>Product Introduction</span>
         </div>
-        <div v-html="aboutCs?.bni_info.brief_introduction?.value">
-        </div>
-        <!-- <CollapseText :text="aboutCs?.bni_info.brief_introduction?.value" /> -->
+        <CollapseText>
+          <div v-html="companyInfo.about_us.bni_info.brief_introduction.value"></div>
+        </CollapseText>
         <!-- <wd-collapse>
-                <div v-if="aboutCs" v-html="aboutCs.brief_introduction.value"></div>
-              </wd-collapse> -->
+        </wd-collapse> -->
       </div>
       <div class="block-white" style="margin-top: 16px;"
         v-if="companyInfo?.bni_album && companyInfo?.bni_album.length > 0">
@@ -136,7 +135,8 @@ import { queryCompanyDetail } from '@/service/index/detail'
 import { downloadByFileid } from '@/utils/index'
 import AutoImg from '@/components/autoImg/index.vue'
 import LiveBtn from '@/components/liveBtn/index.vue'
-// import CollapseText from "@/components/collapseText/index.vue";
+import CollapseText from "@/components/collapseText/index.vue";
+import { useAbout } from "@/hooks/useAbout";
 import { useMessage } from 'wot-design-uni'
 const message = useMessage()
 
@@ -181,8 +181,6 @@ const handleDownloadByFileid = (url: any) => {
     })
 }
 
-const isProductMore = ref(true)
-
 const company = ref<Company>()
 const productList = ref<ProductItem[]>()
 const aboutCs = ref<AboutUs>()
@@ -194,6 +192,9 @@ const companyInfo = ref<CompanyProfile>()
 onLoad((options) => {
   console.log("options", options.companyId);
   queryCompanyDetail(Number(options.companyId)).then(res => {
+
+    // 格式化
+    res.data.company.about_us.bni_info = useAbout(res.data.company)
     companyInfo.value = res.data.company
 
     console.log("详情", res.data);
@@ -323,7 +324,7 @@ onLoad((options) => {
 
 .images-list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 
   .item {

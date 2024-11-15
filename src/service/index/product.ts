@@ -25,7 +25,7 @@ export interface AboutUs {
   company_name: string;
   main_product: string;
   max_staff: number;
-  business_type: number;
+  business_type: string;
   establish_year: string;
   max_year_revenue: string;
   area: string;
@@ -52,7 +52,7 @@ export interface ProductItem {
 
 export interface BniInfo {
   avatar: string
-  companyArea: number
+  companyArea: string
   companyNature: string
   electronicReport: string
   email: string
@@ -69,7 +69,7 @@ export interface BniInfo {
     htmlType: 0,
     layoutType: 0,
     tabsTitle: "product details",
-    value: "<p></p>",
+    value: string,
   }
 }
 
