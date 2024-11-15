@@ -46,7 +46,7 @@
       <div class="right">
         <!-- <i class="iconfont icon-liuyanfill"></i> -->
         <span>
-          Live Chat
+          {{ lang('liveChat') }}
         </span>
       </div>
     </div>
@@ -56,6 +56,9 @@
 <script lang="ts" setup>
 import { CompanyProfile } from '@/service/index/product'
 import AutoImg from "@/components/autoImg/index.vue";
+import { useLangDict } from "@/hooks/useLang";
+
+const { lang } = useLangDict()
 
 interface Props {
   product: CompanyProfile

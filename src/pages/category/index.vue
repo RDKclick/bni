@@ -95,6 +95,12 @@ const handleSearchName = (name: string) => {
 }
 
 handleQueryData()
+
+onShow(() => {
+  uni.setNavigationBarTitle({
+    title: lang('category')
+  })
+})
 </script>
 
 <style lang="scss" scoped>

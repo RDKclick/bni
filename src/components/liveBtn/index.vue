@@ -10,12 +10,15 @@
 <template>
   <wd-action-sheet v-model="show" :actions="countActions" @close="close" @select="select" />
   <wd-message-box />
-  <wd-button :style="btnStyle" size="large" :disabled="countActions.length === 0" @click="handleOpen">Live
-    Chat</wd-button>
+  <wd-button :style="btnStyle" size="large" :disabled="countActions.length === 0" @click="handleOpen">{{
+    lang('liveChat') }}</wd-button>
 </template>
 
 <script lang="ts" setup>
 import { useMessage } from 'wot-design-uni'
+import { useLangDict } from "@/hooks/useLang";
+
+const { lang } = useLangDict()
 const message = useMessage()
 
 interface Props {

@@ -25,6 +25,10 @@ onHide(() => {
 </script>
 
 <style lang="scss">
+.uni-placeholder {
+  display: none
+}
+
 /* 媒体查询，针对PC端进行样式调整 */
 @media (min-width: 768px) {
 

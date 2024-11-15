@@ -118,6 +118,13 @@ const handleQueryProduct = () => {
   })
 }
 
+
+
+onShow(() => {
+  uni.setNavigationBarTitle({
+    title: lang('home')
+  })
+})
 </script>
 
 <style lang="scss" scoped>

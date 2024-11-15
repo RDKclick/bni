@@ -65,6 +65,12 @@ queryAboutUs().then(res => {
     infos.privacyPolicy = res.data.aboutUs[2].content
   }
 })
+
+onShow(() => {
+  uni.setNavigationBarTitle({
+    title: lang('aboutUs')
+  })
+})
 </script>
 
 <style lang="scss" scoped>
