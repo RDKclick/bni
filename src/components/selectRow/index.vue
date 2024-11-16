@@ -1,11 +1,18 @@
 <template>
   <div class="row">
-    <span class="title">{{ title }}：</span>
-    <span class="option" :class="{
-      active: item.value === value
-    }" v-for="(item, index) in countOptions" @click="handleToggleCategoryThree(item)" :key="index">
-      {{ item.label }}
-    </span>
+    <div style="display: flex;align-items: center;">
+      <span class="title">{{ title }}：</span>
+      <div class="option-list">
+        <span class="option" :class="{
+          active: item.value === value
+        }" v-for="(item, index) in countOptions" @click="handleToggleCategoryThree(item)" :key="index">
+          {{ item.label }}
+        </span>
+      </div>
+    </div>
+    <wd-popover mode="menu" :content="countMenuItems" @menuclick="handleMenuClick" placement="bottom-end">
+      <wd-icon name="arrow-down" size="22px" color="#725972"></wd-icon>
+    </wd-popover>
   </div>
 </template>
 
@@ -41,6 +48,18 @@ const countOptions = computed(() => {
   ]
 })
 
+const countMenuItems = computed(() => props.options.map(item => {
+  return {
+    ...item,
+    content: item.label
+  }
+}))
+
+const handleMenuClick = (e: any) => {
+  console.log("e", e);
+  handleToggleCategoryThree(e.item)
+}
+
 const handleToggleCategoryThree = (item: Options) => {
   emits('toggle', item)
 }
@@ -50,11 +69,18 @@ const handleToggleCategoryThree = (item: Options) => {
 .row {
   display: flex;
   gap: 24px;
+  justify-content: space-between;
 
   .title {
     font-family: SourceHanSansSC-regular;
     font-size: 13px;
     color: rgba(89, 89, 89, 1);
+  }
+
+  .option-list {
+    display: flex;
+    gap: 20rpx;
+    align-items: center;
   }
 
   .option {
