@@ -118,8 +118,6 @@ const handleQueryProduct = () => {
   })
 }
 
-
-
 onShow(() => {
   uni.setNavigationBarTitle({
     title: lang('home')
